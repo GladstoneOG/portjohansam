@@ -70,6 +70,7 @@ export default function MatrixCanvas() {
     elapsed: 0,
     next: randomInRange(AMBIENT_SPAWN_INTERVAL),
   });
+  const isMobileRef = useRef(false);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -86,6 +87,13 @@ export default function MatrixCanvas() {
 
     const resize = () => {
       const { innerWidth, innerHeight } = window;
+      isMobileRef.current = innerWidth <= MOBILE_BREAKPOINT;
+      if (isMobileRef.current) {
+        const pointer = mouse.current;
+        pointer.active = false;
+        pointer.x = innerWidth / 2;
+        pointer.y = innerHeight / 2;
+      }
       canvas.width = innerWidth * dpr;
       canvas.height = innerHeight * dpr;
       canvas.style.width = `${innerWidth}px`;
@@ -102,6 +110,9 @@ export default function MatrixCanvas() {
     pointer.y = window.innerHeight / 2;
 
     const handlePointerMove = (event: PointerEvent) => {
+      if (isMobileRef.current) {
+        return;
+      }
       pointer.x = event.clientX;
       pointer.y = event.clientY;
       pointer.active = true;
@@ -141,8 +152,10 @@ export default function MatrixCanvas() {
 
       const cols = Math.ceil(width / spacing) + 2;
       const rows = Math.ceil(height / spacing) + 2;
-      const pointerNormX = width > 0 ? pointer.x / width - 0.5 : 0;
-      const pointerNormY = height > 0 ? pointer.y / height - 0.5 : 0;
+      const isMobile = isMobileRef.current;
+      const pointerNormX = !isMobile && width > 0 ? pointer.x / width - 0.5 : 0;
+      const pointerNormY =
+        !isMobile && height > 0 ? pointer.y / height - 0.5 : 0;
       const nearbyDots: DotPoint[] = [];
       const dotMap = new Map<string, DotPoint>();
 
@@ -205,7 +218,8 @@ export default function MatrixCanvas() {
       }
 
       const dotList = Array.from(dotMap.values());
-      const pointerHasInfluence = pointer.active && nearbyDots.length > 1;
+      const pointerHasInfluence =
+        !isMobile && pointer.active && nearbyDots.length > 1;
 
       if (pointerHasInfluence) {
         const cellX = Math.floor(pointer.x / spacing);
