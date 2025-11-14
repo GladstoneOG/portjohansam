@@ -56,13 +56,25 @@ export const featuredProjects = [
 
 export const socialLinks = [
   { label: "Email", href: "mailto:johansans999@gmail.com" },
-  { label: "LinkedIn", href: "https://www.linkedin.com/in/johan-samsudin-25440620a/" },
+  {
+    label: "LinkedIn",
+    href: "https://www.linkedin.com/in/johan-samsudin-25440620a/",
+  },
   { label: "GitHub", href: "https://github.com/GladstoneOG" },
 ];
 
 export const skills = {
   programming: ["SAP ABAP", "PHP", "JavaScript"],
-  sap: ["SAP ERP ECC 6.0", "SAP IS-H", "RICEFW", "BAPIs", "BADIs", "SmartForms", "ALV Grids", "BDC"],
+  sap: [
+    "SAP ERP ECC 6.0",
+    "SAP IS-H",
+    "RICEFW",
+    "BAPIs",
+    "BADIs",
+    "SmartForms",
+    "ALV Grids",
+    "BDC",
+  ],
   systems: ["ERP Systems"],
   databases: ["SQL Server"],
 };
@@ -77,10 +89,26 @@ export const education = [
 
 export const certifications = [
   { name: "SAP 01 - SAP Overview", id: "550100830", issued: "Jul 2019" },
-  { name: "SAP AC010 - Business Processes in Financial Accounting", id: "550106654", issued: "Jan 2020" },
-  { name: "SAP THR10_1 - Management & Administration I in HR Part I", id: "550106874", issued: "Jan 2020" },
-  { name: "SAP HR050 - Business Processes in Human Capital Management", id: "550106726", issued: "Jan 2020" },
-  { name: "SAP TFIN50_1 - Financial Accounting I Part 1", id: "550106801", issued: "Jan 2020" },
+  {
+    name: "SAP AC010 - Business Processes in Financial Accounting",
+    id: "550106654",
+    issued: "Jan 2020",
+  },
+  {
+    name: "SAP THR10_1 - Management & Administration I in HR Part I",
+    id: "550106874",
+    issued: "Jan 2020",
+  },
+  {
+    name: "SAP HR050 - Business Processes in Human Capital Management",
+    id: "550106726",
+    issued: "Jan 2020",
+  },
+  {
+    name: "SAP TFIN50_1 - Financial Accounting I Part 1",
+    id: "550106801",
+    issued: "Jan 2020",
+  },
 ];
 
 export const languages = [

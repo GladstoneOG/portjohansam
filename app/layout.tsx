@@ -3,6 +3,7 @@ import "./globals.css";
 import { Fira_Code } from "next/font/google";
 import SmoothScrollProvider from "../components/providers/smooth-scroll-provider";
 import MatrixCanvas from "../components/canvas/matrix-canvas";
+import icon from "../components/icon.png";
 
 const display = Fira_Code({
   subsets: ["latin"],
@@ -10,8 +11,11 @@ const display = Fira_Code({
 });
 
 export const metadata: Metadata = {
-  title: "Johan Sam - Portfolio",
-  description: "High-end cinematic portfolio for Johan Sam.",
+  title: "Johan Samsudin",
+  description: "Johan Samsudin | SAP IS-H & ABAP Developer.",
+  icons: {
+    icon: icon.src,
+  },
 };
 
 export default function RootLayout({

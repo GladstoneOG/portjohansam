@@ -44,7 +44,10 @@ export default function HeroSection() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.35, ease: "easeOut" }}
         >
-          Experienced SAP ABAP IS-H developer (ECC 6.0) specializing in RICEFW objects, performance tuning, and bridging SAP with web (PHP / JavaScript) to deliver reliable hospital information systems and integration solutions.
+          Experienced SAP ABAP IS-H developer (ECC 6.0) specializing in RICEFW
+          objects, performance tuning, and bridging SAP with web (PHP /
+          JavaScript) to deliver reliable hospital information systems and
+          integration solutions.
         </motion.p>
 
         <motion.a
@@ -61,7 +64,9 @@ export default function HeroSection() {
 
           <span className="relative flex flex-col text-xs uppercase tracking-[0.35em] text-white/80">
             <span className="text-white">Explore</span>
-            <span className="text-[0.55rem] text-white/55">Professional Summary</span>
+            <span className="text-[0.55rem] text-white/55">
+              Professional Summary
+            </span>
           </span>
 
           <span className="relative flex items-center gap-3 pr-1">

@@ -68,27 +68,55 @@ export default function AboutSection() {
             Professional Summary
           </h3>
           <p className="text-base text-white/60">
-            Experienced ABAP Developer with a strong background in SAP ERP ECC 6.0 and IS-H, specializing in RICEFW developments: reports, BAPIs, BADIs, SmartForms, ALV grids, and BDC programs. Skilled in debugging and performance optimization to ensure efficient, high-quality SAP solutions.
+            Experienced ABAP Developer with a strong background in SAP ERP ECC
+            6.0 and IS-H, specializing in RICEFW developments: reports, BAPIs,
+            BADIs, SmartForms, ALV grids, and BDC programs. Skilled in debugging
+            and performance optimization to ensure efficient, high-quality SAP
+            solutions.
           </p>
           <p className="text-base text-white/60">
-            Proven ability to bridge SAP and web technologies (PHP, JavaScript) delivering integration layers, hospital queueing, fallback ERP systems, and KPI compliance platforms that sustain operational continuity.
+            Proven ability to bridge SAP and web technologies (PHP, JavaScript)
+            delivering integration layers, hospital queueing, fallback ERP
+            systems, and KPI compliance platforms that sustain operational
+            continuity.
           </p>
           <div className="space-y-4 pt-2 text-white/70">
             <div>
-              <p className="text-xs uppercase tracking-[0.3em] text-white/40 mb-2">Technical Skills</p>
+              <p className="text-xs uppercase tracking-[0.3em] text-white/40 mb-2">
+                Technical Skills
+              </p>
               <ul className="space-y-1 text-sm">
-                <li><span className="font-semibold text-white">Programming:</span> SAP ABAP, PHP, JavaScript</li>
-                <li><span className="font-semibold text-white">SAP:</span> ECC 6.0, IS-H, RICEFW, BAPIs, BADIs, SmartForms, ALV, BDC</li>
-                <li><span className="font-semibold text-white">Systems:</span> ERP Systems</li>
-                <li><span className="font-semibold text-white">Databases:</span> SQL Server</li>
+                <li>
+                  <span className="font-semibold text-white">Programming:</span>{" "}
+                  SAP ABAP, PHP, JavaScript
+                </li>
+                <li>
+                  <span className="font-semibold text-white">SAP:</span> ECC
+                  6.0, IS-H, RICEFW, BAPIs, BADIs, SmartForms, ALV, BDC
+                </li>
+                <li>
+                  <span className="font-semibold text-white">Systems:</span> ERP
+                  Systems
+                </li>
+                <li>
+                  <span className="font-semibold text-white">Databases:</span>{" "}
+                  SQL Server
+                </li>
               </ul>
             </div>
             <div>
-              <p className="text-xs uppercase tracking-[0.3em] text-white/40 mb-2">Education</p>
-              <p className="text-sm">Bina Nusantara University – Bachelor of Computer Science / Information Systems (2021)</p>
+              <p className="text-xs uppercase tracking-[0.3em] text-white/40 mb-2">
+                Education
+              </p>
+              <p className="text-sm">
+                Bina Nusantara University – Bachelor of Computer Science /
+                Information Systems (2021)
+              </p>
             </div>
             <div>
-              <p className="text-xs uppercase tracking-[0.3em] text-white/40 mb-2">Certifications</p>
+              <p className="text-xs uppercase tracking-[0.3em] text-white/40 mb-2">
+                Certifications
+              </p>
               <ul className="grid grid-cols-1 gap-1 text-xs md:grid-cols-2">
                 <li>SAP 01 – SAP Overview (550100830)</li>
                 <li>AC010 – Financial Accounting (550106654)</li>
@@ -98,8 +126,12 @@ export default function AboutSection() {
               </ul>
             </div>
             <div>
-              <p className="text-xs uppercase tracking-[0.3em] text-white/40 mb-2">Languages</p>
-              <p className="text-sm">Bahasa Indonesia (Native), English (Professional)</p>
+              <p className="text-xs uppercase tracking-[0.3em] text-white/40 mb-2">
+                Languages
+              </p>
+              <p className="text-sm">
+                Bahasa Indonesia (Native), English (Professional)
+              </p>
             </div>
           </div>
         </div>
