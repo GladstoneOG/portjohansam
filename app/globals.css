@@ -1,0 +1,23 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+}
+
+body {
+  @apply bg-black text-white antialiased font-mono;
+}
+
+a {
+  @apply text-electric transition-colors duration-200;
+}
+
+a:hover {
+  @apply text-cyan;
+}
+
+.section-padding {
+  @apply px-6 md:px-16 lg:px-28;
+}
