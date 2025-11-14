@@ -26,7 +26,7 @@ export default function HeroSection() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.1 }}
         >
-          Precision First
+          SAP • ABAP • Integration
         </motion.span>
 
         <motion.h1
@@ -35,7 +35,7 @@ export default function HeroSection() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.2, ease: "easeOut" }}
         >
-          Hi, I&rsquo;m Johan Sam - crafting digital precision.
+          Johan Samsudin – ABAP & Integration Developer
         </motion.h1>
 
         <motion.p
@@ -44,8 +44,7 @@ export default function HeroSection() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.35, ease: "easeOut" }}
         >
-          A creative technologist engineering cinematic web systems for
-          high-performing teams - where motion, clarity, and code converge.
+          Experienced SAP ABAP IS-H developer (ECC 6.0) specializing in RICEFW objects, performance tuning, and bridging SAP with web (PHP / JavaScript) to deliver reliable hospital information systems and integration solutions.
         </motion.p>
 
         <motion.a
@@ -62,9 +61,7 @@ export default function HeroSection() {
 
           <span className="relative flex flex-col text-xs uppercase tracking-[0.35em] text-white/80">
             <span className="text-white">Explore</span>
-            <span className="text-[0.55rem] text-white/55">
-              Scroll to next chapter
-            </span>
+            <span className="text-[0.55rem] text-white/55">Professional Summary</span>
           </span>
 
           <span className="relative flex items-center gap-3 pr-1">

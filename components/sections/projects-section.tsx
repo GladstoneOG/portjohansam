@@ -53,8 +53,8 @@ export default function ProjectsSection() {
     >
       <SectionHeading
         eyebrow="Projects"
-        title="Cinematic Systems"
-        description="Selected explorations engineered with choreographed motion, layered storytelling, and technically rigorous builds."
+        title="Key Projects"
+        description="Selected systems delivering integration, operational continuity, workflow efficiency, and compliance within hospital and enterprise contexts."
       />
 
       <div className="grid gap-12 md:gap-16">

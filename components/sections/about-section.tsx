@@ -65,18 +65,43 @@ export default function AboutSection() {
             About
           </p>
           <h3 className="text-3xl font-semibold uppercase tracking-[0.2em] text-white md:text-4xl">
-            Engineering calm, cinematic experiences.
+            Professional Summary
           </h3>
           <p className="text-base text-white/60">
-            I architect immersive products from UX strategy through delivery -
-            fusing systems thinking, rigorous prototyping, and motion design.
-            Every detail is tuned for legibility, flow, and measurable outcomes.
+            Experienced ABAP Developer with a strong background in SAP ERP ECC 6.0 and IS-H, specializing in RICEFW developments: reports, BAPIs, BADIs, SmartForms, ALV grids, and BDC programs. Skilled in debugging and performance optimization to ensure efficient, high-quality SAP solutions.
           </p>
           <p className="text-base text-white/60">
-            With roots in creative technology and high-availability
-            applications, I partner with teams to craft visual-first systems
-            that move as elegantly as they perform.
+            Proven ability to bridge SAP and web technologies (PHP, JavaScript) delivering integration layers, hospital queueing, fallback ERP systems, and KPI compliance platforms that sustain operational continuity.
           </p>
+          <div className="space-y-4 pt-2 text-white/70">
+            <div>
+              <p className="text-xs uppercase tracking-[0.3em] text-white/40 mb-2">Technical Skills</p>
+              <ul className="space-y-1 text-sm">
+                <li><span className="font-semibold text-white">Programming:</span> SAP ABAP, PHP, JavaScript</li>
+                <li><span className="font-semibold text-white">SAP:</span> ECC 6.0, IS-H, RICEFW, BAPIs, BADIs, SmartForms, ALV, BDC</li>
+                <li><span className="font-semibold text-white">Systems:</span> ERP Systems</li>
+                <li><span className="font-semibold text-white">Databases:</span> SQL Server</li>
+              </ul>
+            </div>
+            <div>
+              <p className="text-xs uppercase tracking-[0.3em] text-white/40 mb-2">Education</p>
+              <p className="text-sm">Bina Nusantara University – Bachelor of Computer Science / Information Systems (2021)</p>
+            </div>
+            <div>
+              <p className="text-xs uppercase tracking-[0.3em] text-white/40 mb-2">Certifications</p>
+              <ul className="grid grid-cols-1 gap-1 text-xs md:grid-cols-2">
+                <li>SAP 01 – SAP Overview (550100830)</li>
+                <li>AC010 – Financial Accounting (550106654)</li>
+                <li>THR10_1 – HR Admin I (550106874)</li>
+                <li>HR050 – HCM Processes (550106726)</li>
+                <li>TFIN50_1 – FI Part 1 (550106801)</li>
+              </ul>
+            </div>
+            <div>
+              <p className="text-xs uppercase tracking-[0.3em] text-white/40 mb-2">Languages</p>
+              <p className="text-sm">Bahasa Indonesia (Native), English (Professional)</p>
+            </div>
+          </div>
         </div>
 
         <div
@@ -87,8 +112,8 @@ export default function AboutSection() {
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(0,255,255,0.4),transparent_60%)]" />
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,rgba(255,0,255,0.35),transparent_60%)]" />
           <div className="absolute inset-0 backdrop-blur-md" />
-          <div className="absolute inset-0 flex items-center justify-center text-7xl font-semibold tracking-[0.4em] text-white/15">
-            JS
+          <div className="absolute inset-0 flex items-center justify-center text-6xl font-semibold tracking-[0.4em] text-white/15">
+            ABAP
           </div>
         </div>
       </div>

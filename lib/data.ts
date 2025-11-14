@@ -1,59 +1,89 @@
 export const experienceTimeline = [
   {
-    year: "2024 - Present",
-    role: "Lead Frontend Engineer",
-    company: "Spectral Systems",
+    year: "2021 - Present",
+    role: "SAP ABAP IS-H Developer",
+    company: "Pantai Indah Kapuk Hospital",
     description:
-      "Scaling immersive product experiences for enterprise trading platforms with a focus on latency-sensitive UI and resilient design systems.",
+      "Develop and test RICEFW objects (reports, BAPIs, BADIs, SmartForms, ALV, BDC) based on user requirements; debug, optimize performance; design integration interfaces; monitor system performance, backups, and authorizations ensuring operational continuity.",
   },
   {
-    year: "2022 - 2024",
-    role: "Senior UI Engineer",
-    company: "Pulse Labs",
+    year: "2020 - 2021",
+    role: "Business Analyst",
+    company: "Mandiri Utama Finance",
     description:
-      "Owned the observability suite overhaul, shipping real-time telemetry dashboards and custom shader-driven data visualizations.",
-  },
-  {
-    year: "2019 - 2022",
-    role: "Creative Technologist",
-    company: "Nova Studio",
-    description:
-      "Delivered award-winning interactive narratives blending WebGL, motion design, and connected installations for global brands.",
+      "Executed UAT cycles, produced system documentation and user guides, translating functional requirements into testable specifications and supporting successful system rollouts.",
   },
 ];
 
 export const featuredProjects = [
   {
-    title: "Quantum Mesh",
-    subtitle: "Interactive analytics fabric",
+    title: "SAP-EMR Integration Bridge",
+    subtitle: "Full-stack data synchronization",
     description:
-      "A cinematic data exploration experience leveraging volumetric rendering, distributed graph traversal, and adaptive streaming.",
-    tags: ["Next.js", "Three.js", "WebRTC"],
-    image: "/images/project-quantum.jpg",
-    cta: "View Case Study",
+      "Built a PHP / JavaScript / ABAP bridge enabling seamless sync of patient data, case data, and financial transactions between SAP IS-H and the hospital EMR.",
+    tags: ["ABAP", "PHP", "JavaScript", "SAP"],
+    image: "/images/project-emr.jpg",
+    cta: "Details",
   },
   {
-    title: "Echo Field",
-    subtitle: "Spatial audio playground",
+    title: "Advanced Hospital Queueing System",
+    subtitle: "Real-time patient flow",
     description:
-      "Modular audio-reactive toolkit enabling performers to choreograph light, sound, and motion in real time.",
-    tags: ["React", "Tone.js", "WebGL"],
-    image: "/images/project-echo.jpg",
-    cta: "View Project",
+      "Implemented queue management with room displays, booking integration, wait-time estimation, WhatsApp notifications, and custom SAP reporting menus.",
+    tags: ["ABAP", "JavaScript", "PHP", "SQL Server"],
+    image: "/images/project-queue.jpg",
+    cta: "Details",
   },
   {
-    title: "Flux Atlas",
-    subtitle: "Cyber-physical command center",
+    title: "Web-Based ERP Fallback System",
+    subtitle: "High-availability operations",
     description:
-      "Immersive operations interface syncing edge devices, predictive maintenance, and expert oversight with sub-second drift.",
-    tags: ["TypeScript", "GSAP", "D3"],
-    image: "/images/project-flux.jpg",
-    cta: "View Prototype",
+      "Architected a browser ERP fallback to maintain continuity and data integrity during SAP maintenance windows.",
+    tags: ["PHP", "JavaScript", "SQL Server"],
+    image: "/images/project-fallback.jpg",
+    cta: "Details",
+  },
+  {
+    title: "Regulatory Compliance KPI Program",
+    subtitle: "Performance tracking platform",
+    description:
+      "Developed a KPI recording and tracking application simplifying regulatory compliance reporting for hospital staff.",
+    tags: ["PHP", "JavaScript", "ABAP"],
+    image: "/images/project-kpi.jpg",
+    cta: "Details",
   },
 ];
 
 export const socialLinks = [
-  { label: "Email", href: "mailto:hello@johansam.com" },
-  { label: "LinkedIn", href: "https://www.linkedin.com/in/johansam" },
-  { label: "GitHub", href: "https://github.com/johansam" },
+  { label: "Email", href: "mailto:johansans999@gmail.com" },
+  { label: "LinkedIn", href: "https://www.linkedin.com/in/johan-samsudin-25440620a/" },
+  { label: "GitHub", href: "https://github.com/GladstoneOG" },
+];
+
+export const skills = {
+  programming: ["SAP ABAP", "PHP", "JavaScript"],
+  sap: ["SAP ERP ECC 6.0", "SAP IS-H", "RICEFW", "BAPIs", "BADIs", "SmartForms", "ALV Grids", "BDC"],
+  systems: ["ERP Systems"],
+  databases: ["SQL Server"],
+};
+
+export const education = [
+  {
+    institution: "Bina Nusantara University",
+    degree: "Bachelor of Computer Science / Information Systems",
+    year: "Graduated 2021",
+  },
+];
+
+export const certifications = [
+  { name: "SAP 01 - SAP Overview", id: "550100830", issued: "Jul 2019" },
+  { name: "SAP AC010 - Business Processes in Financial Accounting", id: "550106654", issued: "Jan 2020" },
+  { name: "SAP THR10_1 - Management & Administration I in HR Part I", id: "550106874", issued: "Jan 2020" },
+  { name: "SAP HR050 - Business Processes in Human Capital Management", id: "550106726", issued: "Jan 2020" },
+  { name: "SAP TFIN50_1 - Financial Accounting I Part 1", id: "550106801", issued: "Jan 2020" },
+];
+
+export const languages = [
+  { name: "Bahasa Indonesia", level: "Native" },
+  { name: "English", level: "Professional" },
 ];

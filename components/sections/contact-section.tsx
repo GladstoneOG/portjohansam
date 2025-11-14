@@ -9,18 +9,18 @@ export default function ContactSection() {
     <section id="contact" className="section-padding relative py-32">
       <SectionHeading
         eyebrow="Contact"
-        title="Build Together"
-        description="Let's craft experiences that feel inevitable - calm, cinematic, and measurable."
+        title="Get In Touch"
+        description="Reach out for SAP IS-H development, integration bridges, performance optimization, or ERP continuity initiatives."
       />
 
       <div className="flex flex-col gap-10 text-sm uppercase tracking-[0.3em] text-white/60 md:flex-row md:items-center md:justify-between">
         <motion.a
-          href="mailto:hello@johansam.com"
+          href="mailto:johansans999@gmail.com"
           className="inline-flex items-center gap-4 rounded-full border border-white/15 bg-white/5 px-8 py-4 text-white/90 shadow-[0_0_35px_rgba(255,255,255,0.08)] backdrop-blur-md transition-colors duration-300 hover:border-cyan/50 hover:text-cyan"
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.97 }}
         >
-          hello@johansam.com
+          johansans999@gmail.com
         </motion.a>
 
         <div className="flex flex-wrap gap-6">
@@ -41,7 +41,7 @@ export default function ContactSection() {
       </div>
 
       <p className="mt-24 text-xs uppercase tracking-[0.4em] text-white/40">
-        Crafted with precision (c) 2025
+        © 2025 Johan Samsudin
       </p>
     </section>
   );

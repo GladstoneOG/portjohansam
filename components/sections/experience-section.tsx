@@ -47,8 +47,8 @@ export default function ExperienceSection() {
     >
       <SectionHeading
         eyebrow="Experience"
-        title="Selected Work"
-        description="Moments where design, narrative, and engineering aligned to launch resilient, differentiated experiences."
+        title="Professional Roles"
+        description="Core positions contributing to hospital information systems, SAP IS-H optimization, and structured business analysis."
       />
 
       <div className="relative border-l border-white/10 pl-10">
