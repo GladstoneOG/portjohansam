@@ -1,113 +1,292 @@
 "use client";
 
-import { motion } from "framer-motion";
-
-const heroVariants = {
-  hidden: { opacity: 0, y: 48 },
-  visible: { opacity: 1, y: 0 },
-};
+import { useCallback, useEffect, useRef } from "react";
+import {
+  gsap,
+  SCRAMBLE_CHARS,
+  ScrollTrigger,
+  SplitText,
+  useGSAP,
+} from "@/lib/gsap";
+import { useSite } from "@/components/providers/site-provider";
+import HeroCanvas from "@/components/gl/hero-canvas";
+import { TerrainScene } from "@/components/gl/terrain-scene";
+import { profile } from "@/lib/data";
+import { Barcode, Magnetic, Scramble } from "@/components/ui/primitives";
 
 export default function HeroSection() {
+  const { loaded, reducedMotion, scrollTo, setTerminalOpen } = useSite();
+  const sectionRef = useRef<HTMLElement>(null);
+  const roleRef = useRef<HTMLSpanElement>(null);
+  const sceneRef = useRef<TerrainScene | null>(null);
+  const introPlayed = useRef(false);
+
+  const playSceneIntro = useCallback(() => {
+    if (!sceneRef.current || introPlayed.current) return;
+    introPlayed.current = true;
+    gsap.to(sceneRef.current.intro, {
+      value: 1,
+      duration: reducedMotion ? 0.4 : 2.3,
+      ease: "expo.out",
+    });
+  }, [reducedMotion]);
+
+  const handleSceneReady = useCallback(
+    (scene: TerrainScene) => {
+      sceneRef.current = scene;
+      if (loaded) playSceneIntro();
+    },
+    [loaded, playSceneIntro]
+  );
+
+  // Trigger 3D column rise + hero SplitText choreography when preloader opens
+  useGSAP(
+    () => {
+      if (!loaded || !sectionRef.current) return;
+      playSceneIntro();
+
+      const tl = gsap.timeline({ defaults: { ease: "glide" } });
+
+      SplitText.create("[data-hero-title]", {
+        type: "chars,lines",
+        mask: "lines",
+        linesClass: "split-mask",
+        autoSplit: true,
+        onSplit(self) {
+          return gsap.from(self.chars, {
+            yPercent: 115,
+            rotateZ: 4,
+            duration: 1.15,
+            stagger: 0.022,
+            ease: "glide",
+          });
+        },
+      });
+
+      tl.from(
+        "[data-hero-hud]",
+        {
+          y: 18,
+          opacity: 0,
+          duration: 0.85,
+          stagger: 0.07,
+        },
+        0.2
+      ).from(
+        "[data-hero-spec]",
+        {
+          y: 24,
+          opacity: 0,
+          duration: 0.9,
+          stagger: 0.06,
+        },
+        0.35
+      );
+    },
+    { scope: sectionRef, dependencies: [loaded] }
+  );
+
+  // Scramble role cycling loop
+  useEffect(() => {
+    if (!loaded || !roleRef.current) return;
+    let idx = 0;
+    const id = window.setInterval(() => {
+      idx = (idx + 1) % profile.roles.length;
+      if (!roleRef.current) return;
+      gsap.to(roleRef.current, {
+        duration: 0.85,
+        ease: "none",
+        scrambleText: {
+          text: profile.roles[idx],
+          chars: SCRAMBLE_CHARS,
+          speed: 0.55,
+        },
+      });
+    }, 2800);
+    return () => window.clearInterval(id);
+  }, [loaded]);
+
+  // Camera dive & typography parallax on scroll
+  useGSAP(
+    () => {
+      const el = sectionRef.current;
+      if (!el) return;
+
+      ScrollTrigger.create({
+        trigger: el,
+        start: "top top",
+        end: "bottom top",
+        scrub: true,
+        onUpdate: (self) => {
+          if (sceneRef.current) {
+            sceneRef.current.scroll = self.progress;
+          }
+        },
+      });
+
+      gsap.to("[data-hero-stage]", {
+        yPercent: -18,
+        opacity: 0.15,
+        ease: "none",
+        scrollTrigger: {
+          trigger: el,
+          start: "top top",
+          end: "bottom top",
+          scrub: true,
+        },
+      });
+    },
+    { scope: sectionRef }
+  );
+
   return (
     <section
       id="hero"
-      className="section-padding relative flex min-h-screen flex-col justify-center overflow-hidden"
+      ref={sectionRef}
+      className="relative isolate flex min-h-[104vh] w-full flex-col justify-between overflow-hidden pt-20 pb-12 md:pb-16 gutter"
     >
-      <motion.div
-        className="relative z-10 max-w-4xl space-y-10"
-        initial="hidden"
-        animate="visible"
-        variants={heroVariants}
-        transition={{ duration: 1.2, ease: "easeOut" }}
-      >
-        <motion.span
-          className="inline-flex w-fit items-center gap-3 rounded-full border border-white/10 px-5 py-2 text-xs uppercase tracking-[0.45em] text-white/60 backdrop-blur-xs"
-          initial={{ opacity: 0, y: -12 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.1 }}
-        >
-          SAP • ABAP • Integration
-        </motion.span>
+      {/* WebGL Instanced Data-City Terrain */}
+      <HeroCanvas
+        onReady={handleSceneReady}
+        reduced={reducedMotion}
+        className="pointer-events-none absolute inset-0 z-0"
+      />
 
-        <motion.h1
-          className="text-5xl font-semibold uppercase tracking-[0.4em] text-white md:text-7xl"
-          initial={{ opacity: 0, y: 36 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 0.2, ease: "easeOut" }}
-        >
-          Johan Samsudin – ABAP & Integration Developer
-        </motion.h1>
+      {/* Subtle architectural vignette & top/bottom gradient */}
+      <div
+        className="pointer-events-none absolute inset-0 z-[1] bg-[radial-gradient(circle_at_50%_45%,transparent_35%,rgba(10,10,11,0.55)_95%)]"
+        aria-hidden
+      />
+      <div
+        className="pointer-events-none absolute inset-x-0 bottom-0 z-[1] h-32 bg-gradient-to-t from-ink to-transparent"
+        aria-hidden
+      />
 
-        <motion.p
-          className="max-w-2xl text-lg text-white/70"
-          initial={{ opacity: 0, y: 24 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 0.35, ease: "easeOut" }}
-        >
-          Experienced SAP ABAP IS-H developer (ECC 6.0) specializing in RICEFW
-          objects, performance tuning, and bridging SAP with web (PHP /
-          JavaScript) to deliver reliable hospital information systems and
-          integration solutions.
-        </motion.p>
-
-        <motion.a
-          href="#about"
-          className="group relative inline-flex w-fit items-center gap-6 overflow-hidden rounded-full border border-white/15 bg-white/5 px-6 py-4 text-left text-white/90 shadow-[0_0_35px_rgba(255,255,255,0.08)] backdrop-blur-md transition duration-300"
-          whileHover={{ scale: 1.04 }}
-          whileTap={{ scale: 0.98 }}
-          aria-label="Explore next section"
-        >
-          <span className="pointer-events-none absolute inset-0 opacity-0 transition duration-500 group-hover:opacity-100">
-            <span className="absolute inset-0 bg-gradient-to-r from-white/5 via-cyan/15 to-magenta/20" />
-            <span className="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(255,255,255,0.25),_transparent_60%)]" />
+      {/* Top Tactical Telemetry Row */}
+      <div className="relative z-10 flex flex-wrap items-center justify-between gap-4 border-b border-paper/15 pb-4">
+        <div data-hero-hud className="flex items-center gap-3">
+          <span className="hud bg-paper/10 px-2 py-1 text-signal">
+            §01 // INIT
           </span>
-
-          <span className="relative flex flex-col text-xs uppercase tracking-[0.35em] text-white/80">
-            <span className="text-white">Explore</span>
-            <span className="text-[0.55rem] text-white/55">
-              Professional Summary
-            </span>
+          <span className="hud text-paper/70">{profile.callsign}</span>
+          <span className="hidden h-3 w-px bg-paper/20 sm:inline-block" />
+          <span className="hud hidden text-paper/50 sm:inline">
+            SAP ECC 6.0 · IS-H · NEURAL ORCHESTRATION
           </span>
+        </div>
 
-          <span className="relative flex items-center gap-3 pr-1">
-            <span className="relative block h-px w-14 overflow-hidden rounded-full bg-white/10">
-              <span className="absolute inset-0 origin-left scale-x-75 bg-white/50 transition duration-300 group-hover:scale-x-100" />
-            </span>
-            <motion.span
-              className="relative flex h-12 w-12 items-center justify-center rounded-full bg-black/30 text-white ring-1 ring-inset ring-white/30 transition duration-300 group-hover:bg-black/70 group-hover:ring-white/60"
-              animate={{ rotate: [0, 6, -6, 0] }}
-              transition={{
-                duration: 3.2,
-                repeat: Infinity,
-                ease: "easeInOut",
-              }}
+        <div data-hero-hud className="flex items-center gap-4">
+          <div className="hud flex items-center gap-2 border border-signal/40 bg-ink/80 px-3 py-1.5 backdrop-blur-sm">
+            <span className="h-1.5 w-1.5 bg-signal blink" />
+            <span className="text-paper/55">DESIGNATION //</span>
+            <span
+              ref={roleRef}
+              className="font-bold text-signal"
             >
-              <svg
-                className="h-5 w-5"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <path d="M12 5v14" />
-                <path d="M7 14l5 5 5-5" />
-              </svg>
-            </motion.span>
-          </span>
-        </motion.a>
-      </motion.div>
+              {profile.roles[0]}
+            </span>
+          </div>
+          <Barcode
+            value="JS-01-VIBE-ABAP"
+            className="hidden h-5 w-28 text-paper/45 lg:block"
+          />
+        </div>
+      </div>
 
-      <motion.div
-        className="absolute inset-0 -z-10 opacity-40"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 0.4 }}
-        transition={{ duration: 2, delay: 0.4 }}
-      >
-        <div className="absolute -left-32 top-10 h-64 w-64 rounded-full bg-cyan/20 blur-3xl" />
-        <div className="absolute bottom-0 right-0 h-72 w-72 rounded-full bg-magenta/20 blur-3xl" />
-      </motion.div>
+      {/* Centerpiece Ultra-Condensed Swiss Display Headline */}
+      <div data-hero-stage className="relative z-10 my-auto py-10 md:py-14">
+        <div data-hero-hud className="hud mb-3 flex items-center gap-3 text-signal">
+          <span>[VIBE CODING IN ENTERPRISE ABAP]</span>
+          <span className="h-px w-16 bg-signal/50" />
+          <span className="text-paper/60">PROMPT → MCP → TRANSPORT</span>
+        </div>
+
+        <h1 className="select-none font-cond font-display uppercase leading-[0.81] tracking-tightest">
+          <span
+            data-hero-title
+            className="block text-[18.5vw] font-black text-paper sm:text-[15.5vw] lg:text-[13.8vw]"
+          >
+            {profile.first}
+          </span>
+          <span className="flex flex-wrap items-baseline gap-x-6">
+            <span
+              data-hero-title
+              className="block text-[18.5vw] font-black text-paper sm:text-[15.5vw] lg:text-[13.8vw]"
+            >
+              {profile.last}
+            </span>
+            <span
+              data-hero-hud
+              className="hud mb-3 hidden border border-signal bg-signal/10 px-3 py-1.5 text-signal xl:inline-flex"
+            >
+              AI-AUGMENTED ABAP ARCHITECT // IS-H
+            </span>
+          </span>
+        </h1>
+      </div>
+
+      {/* Bottom Swiss Specification Grid & Actions */}
+      <div className="relative z-10 grid grid-cols-1 items-end gap-8 border-t border-paper/15 pt-6 lg:grid-cols-12">
+        <div data-hero-hud className="space-y-5 lg:col-span-5">
+          <p className="max-w-xl text-sm leading-relaxed text-paper/80 md:text-base">
+            {profile.summary}
+          </p>
+
+          <div className="flex flex-wrap items-center gap-3">
+            <Magnetic strength={0.25}>
+              <button
+                type="button"
+                onClick={() => scrollTo("#protocol")}
+                data-cursor="PROTOCOL"
+                className="hud bg-signal px-6 py-4 text-xs font-bold text-ink transition-transform hover:scale-[1.02] chamfer-sm"
+              >
+                <Scramble text="INSPECT AI PROTOCOL →" />
+              </button>
+            </Magnetic>
+
+            <Magnetic strength={0.25}>
+              <button
+                type="button"
+                onClick={() => setTerminalOpen(true)}
+                data-cursor="CLI"
+                className="hud border border-paper/25 bg-ink/75 px-5 py-4 text-xs text-paper backdrop-blur-sm transition-colors hover:border-signal hover:text-signal"
+              >
+                LAUNCH VIBE SHELL [~]
+              </button>
+            </Magnetic>
+
+            <Magnetic strength={0.25}>
+              <button
+                type="button"
+                onClick={() => scrollTo("#modules")}
+                data-cursor="MODULES"
+                className="hud border border-paper/15 bg-ink/50 px-4 py-4 text-xs text-paper/70 transition-colors hover:border-paper/45 hover:text-paper"
+              >
+                MODULES [05]
+              </button>
+            </Magnetic>
+          </div>
+        </div>
+
+        {/* 4-Cell Spec Readout */}
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4 lg:col-span-7">
+          {profile.spec.map((item, idx) => (
+            <div
+              key={item.k}
+              data-hero-spec
+              className="brackets border border-paper/15 bg-ink/75 p-4 backdrop-blur-md transition-colors hover:border-signal/60"
+            >
+              <div className="hud flex items-center justify-between text-paper/45">
+                <span>{item.k}</span>
+                <span className="text-signal">0{idx + 1}</span>
+              </div>
+              <div className="mt-3 font-mono text-xs font-semibold text-paper md:text-sm">
+                {item.v}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
     </section>
   );
 }

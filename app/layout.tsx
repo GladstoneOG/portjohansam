@@ -1,33 +1,38 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
+import { Archivo, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
-import { Fira_Code } from "next/font/google";
-import SmoothScrollProvider from "../components/providers/smooth-scroll-provider";
-import MatrixCanvas from "../components/canvas/matrix-canvas";
-import icon from "../components/icon.png";
+import SiteProvider from "@/components/providers/site-provider";
+import icon from "@/components/icon.png";
 
-const display = Fira_Code({
+const archivo = Archivo({
   subsets: ["latin"],
-  variable: "--font-display",
+  axes: ["wdth"],
+  variable: "--font-archivo",
+  display: "swap",
+});
+
+const mono = JetBrains_Mono({
+  subsets: ["latin"],
+  variable: "--font-mono",
+  display: "swap",
 });
 
 export const metadata: Metadata = {
-  title: "Johan Samsudin",
-  description: "Johan Samsudin | SAP IS-H & ABAP Developer.",
-  icons: {
-    icon: icon.src,
-  },
+  title: "Johan Samsudin — Prompt Engineer & AI-Augmented ABAP Architect",
+  description:
+    "Johan Samsudin · SAP ABAP IS-H developer engineering AI-native, agentic workflows across the SAP stack. Prompt engineering, context engineering, MCP tooling.",
+  icons: { icon: icon.src },
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export const viewport: Viewport = {
+  themeColor: "#0A0A0B",
+};
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
-      <body className={`${display.variable} bg-black text-white font-mono`}>
-        <MatrixCanvas />
-        <SmoothScrollProvider>{children}</SmoothScrollProvider>
+    <html lang="en" className={`${archivo.variable} ${mono.variable}`}>
+      <body>
+        <SiteProvider>{children}</SiteProvider>
       </body>
     </html>
   );
