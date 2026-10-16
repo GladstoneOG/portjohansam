@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import clsx from "clsx";
 import { gsap, ScrollTrigger, useGSAP } from "@/lib/gsap";
 import { useSite } from "@/components/providers/site-provider";
@@ -16,22 +16,50 @@ const NAV_ITEMS = [
   { id: "contact", label: "CONTACT" },
 ];
 
+const LIGHT_SECTIONS = ["telemetry", "dossier", "credentials"];
+
 export default function HudChrome() {
-  const {
-    loaded,
-    scrollTo,
-    gridOn,
-    toggleGrid,
-    terminalOpen,
-    setTerminalOpen,
-  } = useSite();
+  const { loaded, scrollTo, terminalOpen, setTerminalOpen } = useSite();
 
   const [active, setActive] = useState("hero");
   const [menuOpen, setMenuOpen] = useState(false);
   const [clock, setClock] = useState("00:00:00 WIB");
+  const [lightTicks, setLightTicks] = useState<boolean[]>(() =>
+    sections.map(() => false)
+  );
+
   const rootRef = useRef<HTMLDivElement>(null);
   const barRef = useRef<HTMLDivElement>(null);
   const pctRef = useRef<HTMLSpanElement>(null);
+  const railRefs = useRef<(HTMLButtonElement | null)[]>([]);
+  const lightTicksRef = useRef<boolean[]>(sections.map(() => false));
+
+  // Evaluate per-item background brightness under each side-rail tick
+  const updateRailContrast = useCallback(() => {
+    const lightRects = LIGHT_SECTIONS.map((id) =>
+      document.getElementById(id)?.getBoundingClientRect()
+    ).filter((r): r is DOMRect => !!r);
+
+    let changed = false;
+    const next = sections.map((_, idx) => {
+      const btn = railRefs.current[idx];
+      if (!btn) return false;
+      const r = btn.getBoundingClientRect();
+      const cy = r.top + r.height * 0.5;
+      const isOverLight = lightRects.some(
+        (lr) => cy >= lr.top && cy <= lr.bottom
+      );
+      if (isOverLight !== lightTicksRef.current[idx]) {
+        changed = true;
+      }
+      return isOverLight;
+    });
+
+    if (changed) {
+      lightTicksRef.current = next;
+      setLightTicks(next);
+    }
+  }, []);
 
   // Live Jakarta WIB clock
   useEffect(() => {
@@ -48,7 +76,7 @@ export default function HudChrome() {
     return () => window.clearInterval(id);
   }, []);
 
-  // Keyboard shortcuts: [G] for Swiss grid overlay, [~] or [Ctrl/Cmd+K] for CLI
+  // Keyboard shortcuts: [~] or [Ctrl/Cmd+K] for CLI
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       const tag = (e.target as HTMLElement | null)?.tagName;
@@ -58,10 +86,7 @@ export default function HudChrome() {
         }
         return;
       }
-      if (e.key === "g" || e.key === "G") {
-        e.preventDefault();
-        toggleGrid();
-      } else if (
+      if (
         e.key === "`" ||
         e.key === "~" ||
         ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k")
@@ -75,9 +100,9 @@ export default function HudChrome() {
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [toggleGrid, terminalOpen, setTerminalOpen, menuOpen]);
+  }, [terminalOpen, setTerminalOpen, menuOpen]);
 
-  // Section tracking & global scroll progress bar
+  // Section tracking, per-tick background contrast & global scroll progress bar
   useGSAP(
     () => {
       if (!loaded) return;
@@ -112,15 +137,20 @@ export default function HudChrome() {
                 Math.round(self.progress * 100)
               ).padStart(3, "0")}%`;
             }
+            updateRailContrast();
           },
         })
       );
 
+      updateRailContrast();
+      window.addEventListener("resize", updateRailContrast);
+
       return () => {
         triggers.forEach((t) => t.kill());
+        window.removeEventListener("resize", updateRailContrast);
       };
     },
-    { scope: rootRef, dependencies: [loaded] }
+    { scope: rootRef, dependencies: [loaded, updateRailContrast] }
   );
 
   const jump = (id: string) => {
@@ -132,33 +162,6 @@ export default function HudChrome() {
     <div ref={rootRef}>
       {/* Animated film/industrial grain */}
       <div className="grain" aria-hidden />
-
-      {/* 12-Column Swiss Architectural Blueprint Grid Overlay */}
-      {gridOn ? (
-        <div
-          className="pointer-events-none fixed inset-0 z-[80] gutter"
-          aria-hidden
-        >
-          <div className="grid h-full grid-cols-4 gap-4 md:grid-cols-12">
-            {Array.from({ length: 12 }).map((_, i) => (
-              <div
-                key={i}
-                className={clsx(
-                  "relative h-full border-x border-signal/20 bg-signal/[0.02]",
-                  i >= 4 && "hidden md:block"
-                )}
-              >
-                <span className="hud absolute left-1.5 top-16 text-[9px] text-signal/60">
-                  C{String(i + 1).padStart(2, "0")}
-                </span>
-                <span className="hud absolute bottom-12 left-1.5 text-[9px] text-signal/40">
-                  +
-                </span>
-              </div>
-            ))}
-          </div>
-        </div>
-      ) : null}
 
       {/* Top Tactical Header */}
       <header className="fixed inset-x-0 top-0 z-[95] border-b border-paper/10 bg-ink/85 text-paper backdrop-blur-md">
@@ -226,24 +229,8 @@ export default function HudChrome() {
             })}
           </nav>
 
-          {/* Right Controls: Grid Toggle + CLI Shell + Mobile Trigger */}
+          {/* Right Controls: CLI Shell + Mobile Trigger */}
           <div className="flex items-center gap-2">
-            <button
-              type="button"
-              onClick={toggleGrid}
-              data-cursor="GRID"
-              className={clsx(
-                "hud hidden items-center gap-2 border px-2.5 py-1.5 transition-colors sm:inline-flex",
-                gridOn
-                  ? "border-signal bg-signal text-ink font-bold"
-                  : "border-paper/20 bg-ink-2 text-paper/70 hover:border-paper/50 hover:text-paper"
-              )}
-              title="Toggle 12-column Swiss Grid (G)"
-            >
-              <span>GRID</span>
-              <span className="opacity-60">[G]</span>
-            </button>
-
             <button
               type="button"
               onClick={() => setTerminalOpen(!terminalOpen)}
@@ -291,58 +278,63 @@ export default function HudChrome() {
                 )}
               >
                 <span>{sec.label}</span>
-                <span className="hud text-paper/50">
-                  §0{idx + 1}
-                </span>
+                <span className="hud text-paper/50">§0{idx + 1}</span>
               </button>
             ))}
           </div>
 
           <div className="flex items-center justify-between border-t border-paper/15 pt-4 hud text-paper/60">
-            <button
-              type="button"
-              onClick={toggleGrid}
-              className="border border-paper/20 px-3 py-2 text-paper"
-            >
-              {gridOn ? "GRID: ON" : "GRID: OFF"}
-            </button>
+            <span>{profile.callsign}</span>
             <span>{clock}</span>
           </div>
         </div>
       ) : null}
 
-      {/* Right-Edge Vertical Section Rail */}
+      {/* Right-Edge Background-Aware Vertical Section Rail */}
       <aside
-        className="fixed right-3 top-1/2 z-[92] hidden -translate-y-1/2 flex-col items-end gap-2.5 lg:flex"
+        className="fixed right-3 top-1/2 z-[92] hidden -translate-y-1/2 flex-col items-end gap-2 lg:flex"
         aria-label="Section progress rail"
       >
         {sections.map((sec, idx) => {
           const isActive = active === sec.id;
+          const onLight = lightTicks[idx];
+
           return (
             <button
               key={sec.id}
+              ref={(el) => {
+                railRefs.current[idx] = el;
+              }}
               type="button"
               onClick={() => jump(sec.id)}
               data-cursor={sec.label}
-              className="group flex items-center gap-2 py-0.5 text-right"
+              className="group flex items-center gap-2.5 py-0.5 text-right"
               aria-label={`Jump to ${sec.label}`}
             >
               <span
                 className={clsx(
-                  "hud transition-all duration-200",
+                  "hud px-2 py-1 transition-all duration-200",
                   isActive
-                    ? "translate-x-0 text-signal opacity-100"
-                    : "translate-x-2 text-paper/60 opacity-0 group-hover:translate-x-0 group-hover:opacity-100"
+                    ? onLight
+                      ? "translate-x-0 bg-ink text-signal font-bold opacity-100 shadow-md"
+                      : "translate-x-0 bg-signal text-ink font-bold opacity-100 shadow-md"
+                    : onLight
+                    ? "translate-x-2 bg-ink text-paper opacity-0 group-hover:translate-x-0 group-hover:opacity-100"
+                    : "translate-x-2 bg-ink/90 text-paper border border-paper/20 opacity-0 group-hover:translate-x-0 group-hover:opacity-100"
                 )}
               >
                 0{idx + 1} {sec.label}
               </span>
               <span
                 className={clsx(
-                  "block h-[2px] transition-all duration-300",
+                  "block transition-all duration-300",
                   isActive
-                    ? "w-6 bg-signal"
-                    : "w-2.5 bg-paper/35 group-hover:w-4 group-hover:bg-paper"
+                    ? onLight
+                      ? "h-[3px] w-7 bg-ink ring-1 ring-signal"
+                      : "h-[3px] w-7 bg-signal"
+                    : onLight
+                    ? "h-[2px] w-3 bg-ink/60 group-hover:w-5 group-hover:bg-ink"
+                    : "h-[2px] w-3 bg-paper/45 group-hover:w-5 group-hover:bg-paper"
                 )}
               />
             </button>
@@ -369,12 +361,15 @@ export default function HudChrome() {
               SEC // {active.toUpperCase()}
             </span>
             <span className="text-paper/30">|</span>
-            <span>PRESS [~] SHELL · [G] SWISS GRID</span>
+            <span>PRESS [~] OR [CTRL+K] SHELL</span>
           </div>
 
           <div className="flex items-center gap-2">
             <span>SCROLL //</span>
-            <span ref={pctRef} className="w-9 text-right text-signal font-bold">
+            <span
+              ref={pctRef}
+              className="w-9 text-right font-bold text-signal"
+            >
               000%
             </span>
           </div>

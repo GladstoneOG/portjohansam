@@ -164,21 +164,24 @@ export default function HeroSection() {
 
       {/* Top Tactical Telemetry Row */}
       <div className="relative z-10 flex flex-wrap items-center justify-between gap-4 border-b border-paper/15 pb-4">
-        <div data-hero-hud className="flex items-center gap-3">
-          <span className="hud bg-paper/10 px-2 py-1 text-signal">
+        <div
+          data-hero-hud
+          className="flex items-center gap-3 border border-paper/15 bg-ink/85 px-3 py-1.5 backdrop-blur-md shadow-lg"
+        >
+          <span className="hud bg-signal px-2 py-0.5 font-bold text-ink">
             §01 // INIT
           </span>
-          <span className="hud text-paper/70">{profile.callsign}</span>
-          <span className="hidden h-3 w-px bg-paper/20 sm:inline-block" />
-          <span className="hud hidden text-paper/50 sm:inline">
+          <span className="hud text-paper">{profile.callsign}</span>
+          <span className="hidden h-3 w-px bg-paper/25 sm:inline-block" />
+          <span className="hud hidden text-paper/75 sm:inline">
             SAP ECC 6.0 · IS-H · NEURAL ORCHESTRATION
           </span>
         </div>
 
         <div data-hero-hud className="flex items-center gap-4">
-          <div className="hud flex items-center gap-2 border border-signal/40 bg-ink/80 px-3 py-1.5 backdrop-blur-sm">
+          <div className="hud flex items-center gap-2 border border-signal/50 bg-ink/90 px-3.5 py-1.5 backdrop-blur-md shadow-lg">
             <span className="h-1.5 w-1.5 bg-signal blink" />
-            <span className="text-paper/55">DESIGNATION //</span>
+            <span className="text-paper/75">DESIGNATION //</span>
             <span
               ref={roleRef}
               className="font-bold text-signal"
@@ -188,20 +191,23 @@ export default function HeroSection() {
           </div>
           <Barcode
             value="JS-01-VIBE-ABAP"
-            className="hidden h-5 w-28 text-paper/45 lg:block"
+            className="hidden h-5 w-28 text-paper/60 lg:block"
           />
         </div>
       </div>
 
       {/* Centerpiece Ultra-Condensed Swiss Display Headline */}
       <div data-hero-stage className="relative z-10 my-auto py-10 md:py-14">
-        <div data-hero-hud className="hud mb-3 flex items-center gap-3 text-signal">
-          <span>[VIBE CODING IN ENTERPRISE ABAP]</span>
-          <span className="h-px w-16 bg-signal/50" />
-          <span className="text-paper/60">PROMPT → MCP → TRANSPORT</span>
+        <div
+          data-hero-hud
+          className="hud mb-4 inline-flex flex-wrap items-center gap-3 border border-paper/20 bg-ink/85 px-3.5 py-2 text-signal backdrop-blur-md shadow-[0_12px_32px_rgba(0,0,0,0.85)]"
+        >
+          <span className="font-bold">[VIBE CODING IN ENTERPRISE ABAP]</span>
+          <span className="h-px w-12 bg-signal/60" />
+          <span className="text-paper/85">PROMPT → MCP → TRANSPORT</span>
         </div>
 
-        <h1 className="select-none font-cond font-display uppercase leading-[0.81] tracking-tightest">
+        <h1 className="select-none font-cond font-display uppercase leading-[0.81] tracking-tightest [text-shadow:0_10px_34px_rgba(10,10,11,0.95),0_2px_8px_rgba(10,10,11,0.95)]">
           <span
             data-hero-title
             className="block text-[18.5vw] font-black text-paper sm:text-[15.5vw] lg:text-[13.8vw]"
@@ -217,7 +223,7 @@ export default function HeroSection() {
             </span>
             <span
               data-hero-hud
-              className="hud mb-3 hidden border border-signal bg-signal/10 px-3 py-1.5 text-signal xl:inline-flex"
+              className="hud mb-3 hidden border border-signal bg-ink/90 px-3.5 py-2 font-bold text-signal backdrop-blur-md shadow-[0_10px_30px_rgba(0,0,0,0.9)] xl:inline-flex"
             >
               AI-AUGMENTED ABAP ARCHITECT // IS-H
             </span>
@@ -226,13 +232,24 @@ export default function HeroSection() {
       </div>
 
       {/* Bottom Swiss Specification Grid & Actions */}
-      <div className="relative z-10 grid grid-cols-1 items-end gap-8 border-t border-paper/15 pt-6 lg:grid-cols-12">
-        <div data-hero-hud className="space-y-5 lg:col-span-5">
-          <p className="max-w-xl text-sm leading-relaxed text-paper/80 md:text-base">
+      <div className="relative z-10 grid grid-cols-1 items-end gap-6 border-t border-paper/15 pt-6 lg:grid-cols-12">
+        <div
+          data-hero-hud
+          className="space-y-5 border border-paper/20 border-l-2 border-l-signal bg-ink/85 p-5 backdrop-blur-xl shadow-[0_24px_60px_rgba(0,0,0,0.9)] md:p-6 lg:col-span-5"
+        >
+          <div className="hud flex items-center justify-between border-b border-paper/15 pb-2.5 text-[10px] text-paper/65">
+            <span className="flex items-center gap-2 text-signal">
+              <span className="h-1.5 w-1.5 bg-signal" />
+              OPERATOR BRIEF // SYS-SUMMARY
+            </span>
+            <span>READOUT // HIGH-CONTRAST</span>
+          </div>
+
+          <p className="max-w-xl text-sm font-medium leading-relaxed text-paper md:text-base">
             {profile.summary}
           </p>
 
-          <div className="flex flex-wrap items-center gap-3">
+          <div className="flex flex-wrap items-center gap-3 pt-1">
             <Magnetic strength={0.25}>
               <button
                 type="button"
@@ -249,7 +266,7 @@ export default function HeroSection() {
                 type="button"
                 onClick={() => setTerminalOpen(true)}
                 data-cursor="CLI"
-                className="hud border border-paper/25 bg-ink/75 px-5 py-4 text-xs text-paper backdrop-blur-sm transition-colors hover:border-signal hover:text-signal"
+                className="hud border border-paper/30 bg-ink/90 px-5 py-4 text-xs text-paper backdrop-blur-md transition-colors hover:border-signal hover:text-signal"
               >
                 LAUNCH VIBE SHELL [~]
               </button>
@@ -260,9 +277,9 @@ export default function HeroSection() {
                 type="button"
                 onClick={() => scrollTo("#modules")}
                 data-cursor="MODULES"
-                className="hud border border-paper/15 bg-ink/50 px-4 py-4 text-xs text-paper/70 transition-colors hover:border-paper/45 hover:text-paper"
+                className="hud border border-paper/25 bg-ink/85 px-4 py-4 text-xs text-paper/85 transition-colors hover:border-signal hover:text-signal"
               >
-                MODULES [05]
+                MODULES [08]
               </button>
             </Magnetic>
           </div>
@@ -274,11 +291,11 @@ export default function HeroSection() {
             <div
               key={item.k}
               data-hero-spec
-              className="brackets border border-paper/15 bg-ink/75 p-4 backdrop-blur-md transition-colors hover:border-signal/60"
+              className="brackets border border-paper/20 bg-ink/85 p-4 backdrop-blur-xl shadow-[0_16px_40px_rgba(0,0,0,0.85)] transition-colors hover:border-signal/60"
             >
-              <div className="hud flex items-center justify-between text-paper/45">
+              <div className="hud flex items-center justify-between text-paper/65">
                 <span>{item.k}</span>
-                <span className="text-signal">0{idx + 1}</span>
+                <span className="font-bold text-signal">0{idx + 1}</span>
               </div>
               <div className="mt-3 font-mono text-xs font-semibold text-paper md:text-sm">
                 {item.v}

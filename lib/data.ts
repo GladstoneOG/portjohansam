@@ -135,7 +135,7 @@ export const protocol: {
 
 export const stats = [
   { value: 5, pad: 2, suffix: "+", label: "Years in SAP ABAP IS-H", note: "SINCE 2021" },
-  { value: 5, pad: 2, suffix: "", label: "Systems engineered", note: "HEALTHCARE · AI" },
+  { value: 8, pad: 2, suffix: "", label: "Systems engineered", note: "HEALTHCARE · AI" },
   { value: 5, pad: 2, suffix: "", label: "SAP certifications", note: "FI · HCM · CORE" },
   { value: 24, pad: 2, suffix: "/7", label: "ERP continuity engineered", note: "ZERO DOWNTIME" },
 ];
@@ -179,7 +179,15 @@ export type Project = {
   description: string;
   tags: string[];
   metrics: { k: string; v: string }[];
-  variant: "mesh" | "bridge" | "queue" | "fallback" | "kpi";
+  variant:
+    | "mesh"
+    | "appoint"
+    | "prudent"
+    | "member"
+    | "bridge"
+    | "queue"
+    | "fallback"
+    | "kpi";
   flag?: string;
 };
 
@@ -200,6 +208,60 @@ export const projects: Project[] = [
   },
   {
     code: "MOD-01",
+    title: "Web-to-SAP Appointment & Down-Payment Bridge",
+    subtitle: "Real-time booking & FI Special G/L RFCs",
+    description:
+      "Suite of RFC-enabled function modules (Z_NEW_APPOINTMENT, Z_CHANGE_APPOINTMENT, Z_CANCEL_APPOINTMENT) connecting the hospital's web booking portal directly to SAP IS-H outpatient scheduling (NR14 / NTMN / NAPP) while automatically posting customer down-payment FI documents via BAPI_ACC_DOCUMENT_POST (Special G/L 'A') across QRIS, E-Wallet, Visa, and MasterCard channels.",
+    tags: [
+      "RFC",
+      "BAPI_ACC_DOCUMENT_POST",
+      "SAP IS-H",
+      "FI Special G/L",
+      "NR14 BDC",
+    ],
+    metrics: [
+      { k: "RFC SUITE", v: "03 MODULES" },
+      { k: "FI POSTING", v: "AUTO SP-G/L" },
+    ],
+    variant: "appoint",
+    flag: "HIGHLIGHT // RFC",
+  },
+  {
+    code: "MOD-02",
+    title: "Prudential Guarantee & Split-Billing Suite",
+    subtitle: "Inpatient insurance workflow & OO-ALV",
+    description:
+      "End-to-end 7-program SAP IS-H & FI suite (ZRPA0218–ZRPA0225 / ZA119–ZA125) governing Prudential insurance operations: discount & clinical pathway master uploads (ZT997L/M/N), an interactive OO-ALV workbench tracking chronological inpatient top-up approvals and LMA/LML audit trails (ZT997O/P), automated split-invoice billing, and real-time guarantee analytics.",
+    tags: ["OO-ALV", "SAP IS-H", "Split Invoice", "ZA119–ZA125", "ZT997L–P"],
+    metrics: [
+      { k: "SUITE", v: "07 PROGRAMS" },
+      { k: "CUSTOM DDIC", v: "05 TABLES" },
+    ],
+    variant: "prudent",
+    flag: "HIGHLIGHT // INSURANCE",
+  },
+  {
+    code: "MOD-03",
+    title: "Mom & Baby Loyalty & FI Coupon Ecosystem",
+    subtitle: "Maternity CRM, voucher claims & F-04 clearing",
+    description:
+      "Full-lifecycle 6-program, 9-TCode (ZA126–ZA134), 7-table (ZT997R–ZT997X) SAP IS-H & FI platform managing maternity memberships from delivery room to financial clearing. Enrolls mothers and newborns from birth records (NGEB), dispatches digital voucher cards via HTTP REST JSON payloads (CL_HTTP_CLIENT), enforces Cashier vs. Supervisor claim/void controls, and auto-posts VBRP discount clearings via F-04.",
+    tags: [
+      "CL_HTTP_CLIENT",
+      "FI BDC F-04",
+      "SAP IS-H",
+      "ZA126–ZA134",
+      "ZT997R–X",
+    ],
+    metrics: [
+      { k: "WORKFLOW", v: "09 TCODES" },
+      { k: "SCHEMA", v: "07 Z-TABLES" },
+    ],
+    variant: "member",
+    flag: "HIGHLIGHT // CRM-FI",
+  },
+  {
+    code: "MOD-04",
     title: "SAP-EMR Integration Bridge",
     subtitle: "Full-stack data synchronisation",
     description:
@@ -212,7 +274,7 @@ export const projects: Project[] = [
     variant: "bridge",
   },
   {
-    code: "MOD-02",
+    code: "MOD-05",
     title: "Hospital Queueing System",
     subtitle: "Real-time patient flow",
     description:
@@ -225,7 +287,7 @@ export const projects: Project[] = [
     variant: "queue",
   },
   {
-    code: "MOD-03",
+    code: "MOD-06",
     title: "ERP Fallback System",
     subtitle: "High-availability operations",
     description:
@@ -238,7 +300,7 @@ export const projects: Project[] = [
     variant: "fallback",
   },
   {
-    code: "MOD-04",
+    code: "MOD-07",
     title: "Compliance KPI Program",
     subtitle: "Performance tracking platform",
     description:

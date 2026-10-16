@@ -29,7 +29,6 @@ const QUICK_COMMANDS = [
   "arsenal",
   "certs",
   "contact",
-  "grid",
   "clear",
 ];
 
@@ -45,8 +44,7 @@ const INITIAL_HISTORY: Entry[] = [
 ];
 
 export default function CommandTerminal() {
-  const { terminalOpen, setTerminalOpen, scrollTo, toggleGrid, gridOn } =
-    useSite();
+  const { terminalOpen, setTerminalOpen, scrollTo } = useSite();
   const [input, setInput] = useState("");
   const [history, setHistory] = useState<Entry[]>(INITIAL_HISTORY);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -88,12 +86,11 @@ export default function CommandTerminal() {
           "  vibe          AI-Augmented ABAP / Vibe Coding architecture",
           "  protocol      6-stage Prompt-to-Transport SAP pipeline",
           "  mcp           Simulate live SAP-DEV MCP syntax & activation loop",
-          "  modules       List engineered healthcare & MCP systems (MOD-00..04)",
+          "  modules       List engineered healthcare & MCP systems (MOD-00..07)",
           "  arsenal       Inspect Neural, SAP Core, and Integration stacks",
           "  certs         Verified SAP certifications & credentials",
           "  contact       Direct transmission endpoints",
           "  goto <sec>    Jump to section (hero, protocol, modules, contact...)",
-          "  grid          Toggle 12-column Swiss architectural grid",
           "  clear         Clear terminal scrollback",
           "  exit          Close shell [ESC]",
         ]);
@@ -177,18 +174,9 @@ export default function CommandTerminal() {
         ]);
         break;
 
-      case "grid":
-        toggleGrid();
-        push("accent", [
-          `SWISS 12-COLUMN GRID OVERLAY → ${!gridOn ? "ENABLED" : "DISABLED"}`,
-        ]);
-        break;
-
       case "goto": {
         const target = sections.find(
-          (s) =>
-            s.id === arg ||
-            s.label.toLowerCase() === arg
+          (s) => s.id === arg || s.label.toLowerCase() === arg
         );
         if (target) {
           push("accent", [`Jumping to sector #${target.id}...`]);

@@ -17,10 +17,11 @@ type SiteCtx = {
   loaded: boolean;
   setLoaded: (v: boolean) => void;
   reducedMotion: boolean;
-  scrollTo: (target: string | number | HTMLElement, opts?: { immediate?: boolean }) => void;
+  scrollTo: (
+    target: string | number | HTMLElement,
+    opts?: { immediate?: boolean }
+  ) => void;
   lenisRef: React.MutableRefObject<Lenis | null>;
-  gridOn: boolean;
-  toggleGrid: () => void;
   terminalOpen: boolean;
   setTerminalOpen: (v: boolean) => void;
 };
@@ -36,7 +37,6 @@ export function useSite() {
 export default function SiteProvider({ children }: { children: ReactNode }) {
   const [loaded, setLoaded] = useState(false);
   const [reducedMotion, setReducedMotion] = useState(false);
-  const [gridOn, setGridOn] = useState(false);
   const [terminalOpen, setTerminalOpen] = useState(false);
   const lenisRef = useRef<Lenis | null>(null);
 
@@ -97,8 +97,6 @@ export default function SiteProvider({ children }: { children: ReactNode }) {
     }
   }, []);
 
-  const toggleGrid = useCallback(() => setGridOn((g) => !g), []);
-
   const value = useMemo(
     () => ({
       loaded,
@@ -106,12 +104,10 @@ export default function SiteProvider({ children }: { children: ReactNode }) {
       reducedMotion,
       scrollTo,
       lenisRef,
-      gridOn,
-      toggleGrid,
       terminalOpen,
       setTerminalOpen,
     }),
-    [loaded, reducedMotion, scrollTo, gridOn, toggleGrid, terminalOpen]
+    [loaded, reducedMotion, scrollTo, terminalOpen]
   );
 
   return <Ctx.Provider value={value}>{children}</Ctx.Provider>;

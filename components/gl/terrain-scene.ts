@@ -169,8 +169,10 @@ export class TerrainScene {
   private dustMat: THREE.ShaderMaterial;
   private group = new THREE.Group();
   private raycaster = new THREE.Raycaster();
-  private plane = new THREE.Plane(new THREE.Vector3(0, 1, 0), 0);
+  // Plane at y = 1.6 matches the average visible column-cap elevation
+  private plane = new THREE.Plane(new THREE.Vector3(0, 1, 0), -1.6);
   private ndc = new THREE.Vector2(0, 0);
+  private ndcCam = new THREE.Vector2(0, 0);
   private ndcSmooth = new THREE.Vector2(0, 0);
   private hit = new THREE.Vector3();
   private clock = new THREE.Clock();
@@ -269,6 +271,10 @@ export class TerrainScene {
 
   setPointer(x: number, y: number) {
     this.ndc.set(x, y);
+    this.ndcCam.set(
+      Math.max(-1, Math.min(1, x)),
+      Math.max(-1, Math.min(1, y))
+    );
   }
 
   resize() {
@@ -289,8 +295,8 @@ export class TerrainScene {
     u.uIntro.value = this.intro.value;
     this.dustMat.uniforms.uTime.value = u.uTime.value;
 
-    this.ndcSmooth.lerp(this.ndc, 0.06);
-    this.scrollSmooth += (this.scroll - this.scrollSmooth) * 0.12;
+    this.ndcSmooth.lerp(this.ndcCam, 0.06);
+    this.scrollSmooth += (this.scroll - this.scrollSmooth) * 0.15;
     const s = this.scrollSmooth;
 
     // camera choreography: elevated tactical overlook → diving into the topographical valley on scroll
@@ -299,15 +305,19 @@ export class TerrainScene {
     const cz = 26 - s * 16;
     this.camera.position.set(cx, cy, cz);
     this.camera.lookAt(cx * 0.3, 1.0 - s * 0.5, -8 - s * 6);
-    this.group.rotation.y = this.ndcSmooth.x * 0.06;
+    this.camera.updateMatrixWorld();
 
-    // project pointer onto ground for the ripple
+    this.group.rotation.y = this.ndcSmooth.x * 0.06;
+    this.group.updateMatrixWorld();
+
+    // project pointer onto column-top plane using up-to-date camera & group matrices
     this.raycaster.setFromCamera(this.ndc, this.camera);
     if (this.raycaster.ray.intersectPlane(this.plane, this.hit)) {
+      this.group.worldToLocal(this.hit);
       const m = u.uMouse.value as THREE.Vector2;
-      m.x += (this.hit.x - m.x) * 0.12;
-      m.y += (this.hit.z - m.y) * 0.12;
-      u.uMouseAmp.value += (1 - u.uMouseAmp.value) * 0.06;
+      m.x += (this.hit.x - m.x) * 0.24;
+      m.y += (this.hit.z - m.y) * 0.24;
+      u.uMouseAmp.value += (1 - u.uMouseAmp.value) * 0.08;
     }
 
     this.renderer.render(this.scene, this.camera);

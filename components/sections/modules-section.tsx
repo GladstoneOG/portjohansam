@@ -91,6 +91,309 @@ function ModuleSchematic({ variant }: { variant: Project["variant"] }) {
         </svg>
       );
 
+    case "appoint":
+      return (
+        <svg
+          viewBox="0 0 360 180"
+          className="h-44 w-full border border-paper/15 bg-ink p-3"
+          aria-hidden
+        >
+          {/* Left node: Web/Mobile Booking */}
+          <rect
+            x="14"
+            y="34"
+            width="84"
+            height="112"
+            fill="#111113"
+            stroke="#ECECE6"
+            strokeOpacity="0.4"
+          />
+          <text x="56" y="58" textAnchor="middle" fill="#ECECE6" fontSize="8.5" fontWeight="bold" fontFamily="monospace">
+            WEB PORTAL
+          </text>
+          <text x="56" y="74" textAnchor="middle" fill="#86898F" fontSize="7.5" fontFamily="monospace">
+            NEW / CHG / CAN
+          </text>
+          <text x="56" y="92" textAnchor="middle" fill="#FFE100" fontSize="7.5" fontFamily="monospace">
+            QR · VISA · E-WAL
+          </text>
+          <text x="56" y="126" textAnchor="middle" fill="#86898F" fontSize="7" fontFamily="monospace">
+            JSON PAYLOAD
+          </text>
+
+          {/* Center RFC Router */}
+          <rect
+            x="126"
+            y="26"
+            width="108"
+            height="128"
+            fill="#111113"
+            stroke="#FFE100"
+            strokeWidth="1.5"
+          />
+          <rect x="126" y="26" width="108" height="22" fill="#FFE100" />
+          <text x="180" y="40" textAnchor="middle" fill="#0A0A0B" fontSize="8" fontWeight="bold" fontFamily="monospace">
+            Z_*_APPOINTMENT
+          </text>
+          {["Z_NEW_APPT", "Z_CHG_APPT", "Z_CAN_APPT"].map((fn, i) => (
+            <g key={fn}>
+              <rect
+                x="136"
+                y={58 + i * 28}
+                width="88"
+                height="20"
+                fill="#0A0A0B"
+                stroke="#FFE100"
+                strokeOpacity="0.45"
+              />
+              <text
+                x="180"
+                y={71 + i * 28}
+                textAnchor="middle"
+                fill="#ECECE6"
+                fontSize="7.5"
+                fontFamily="monospace"
+              >
+                {fn}
+              </text>
+            </g>
+          ))}
+
+          {/* Right Dual Target: NR14 + FI BAPI */}
+          <rect
+            x="262"
+            y="26"
+            width="84"
+            height="56"
+            fill="#111113"
+            stroke="#FFE100"
+            strokeOpacity="0.7"
+          />
+          <text x="304" y="46" textAnchor="middle" fill="#FFE100" fontSize="8" fontWeight="bold" fontFamily="monospace">
+            IS-H NR14 BDC
+          </text>
+          <text x="304" y="60" textAnchor="middle" fill="#ECECE6" fontSize="7" fontFamily="monospace">
+            NTMN · NAPP · NPAP
+          </text>
+          <text x="304" y="73" textAnchor="middle" fill="#86898F" fontSize="6.5" fontFamily="monospace">
+            SLOT ALLOCATION
+          </text>
+
+          <rect
+            x="262"
+            y="98"
+            width="84"
+            height="56"
+            fill="#FFE100"
+            stroke="#0A0A0B"
+          />
+          <text x="304" y="118" textAnchor="middle" fill="#0A0A0B" fontSize="8" fontWeight="bold" fontFamily="monospace">
+            FI BAPI POST
+          </text>
+          <text x="304" y="132" textAnchor="middle" fill="#0A0A0B" fontSize="7" fontFamily="monospace">
+            UMSKZ &apos;A&apos; // DP
+          </text>
+          <text x="304" y="145" textAnchor="middle" fill="#0A0A0B" fontSize="6.5" fontFamily="monospace">
+            11510 · 11504 · 11402
+          </text>
+
+          {/* Connectors */}
+          <line x1="98" y1="90" x2="126" y2="90" stroke="#FFE100" strokeWidth="1.5" strokeDasharray="3 2" />
+          <line x1="234" y1="54" x2="262" y2="54" stroke="#FFE100" strokeWidth="1.5" />
+          <line x1="234" y1="126" x2="262" y2="126" stroke="#FFE100" strokeWidth="1.5" />
+        </svg>
+      );
+
+    case "prudent":
+      return (
+        <svg
+          viewBox="0 0 360 180"
+          className="h-44 w-full border border-paper/15 bg-ink p-3"
+          aria-hidden
+        >
+          {/* Top Master Pipeline */}
+          {[
+            ["ZA119", "ZT997L DISKON"],
+            ["ZA120", "ZT997M MASTER CP"],
+            ["ZA121", "ZT997N ASSIGN"],
+          ].map(([tcode, tbl], i) => {
+            const x = 18 + i * 112;
+            return (
+              <g key={tcode}>
+                <rect
+                  x={x}
+                  y="18"
+                  width="100"
+                  height="42"
+                  fill="#111113"
+                  stroke="#ECECE6"
+                  strokeOpacity="0.35"
+                />
+                <text x={x + 50} y="35" textAnchor="middle" fill="#FFE100" fontSize="8.5" fontWeight="bold" fontFamily="monospace">
+                  {tcode}
+                </text>
+                <text x={x + 50} y="49" textAnchor="middle" fill="#ECECE6" fontSize="7" fontFamily="monospace">
+                  {tbl}
+                </text>
+                {i < 2 ? (
+                  <line x1={x + 100} y1="39" x2={x + 112} y2="39" stroke="#FFE100" strokeOpacity="0.6" />
+                ) : null}
+              </g>
+            );
+          })}
+
+          {/* Central OO-ALV Top-Up Workbench */}
+          <rect
+            x="18"
+            y="78"
+            width="196"
+            height="82"
+            fill="#111113"
+            stroke="#FFE100"
+            strokeWidth="1.5"
+          />
+          <rect x="18" y="78" width="196" height="20" fill="#FFE100" />
+          <text x="116" y="91" textAnchor="middle" fill="#0A0A0B" fontSize="8" fontWeight="bold" fontFamily="monospace">
+            ZA122 // OO-ALV TOP-UP WORKBENCH
+          </text>
+          <text x="116" y="114" textAnchor="middle" fill="#ECECE6" fontSize="7.5" fontFamily="monospace">
+            ZT997O HEADER · ZT997P ITEMS
+          </text>
+          <text x="116" y="130" textAnchor="middle" fill="#FFE100" fontSize="7.5" fontFamily="monospace">
+            LMA / LML GUARANTEE TRACKING
+          </text>
+          <text x="116" y="146" textAnchor="middle" fill="#86898F" fontSize="7" fontFamily="monospace">
+            ESTIMASI BIAYA vs PLAFON COVERAGE
+          </text>
+
+          {/* Right Split Billing Output */}
+          <rect
+            x="236"
+            y="78"
+            width="106"
+            height="82"
+            fill="#111113"
+            stroke="#ECECE6"
+            strokeOpacity="0.45"
+          />
+          <text x="289" y="98" textAnchor="middle" fill="#FFE100" fontSize="8.5" fontWeight="bold" fontFamily="monospace">
+            ZA123 – ZA125
+          </text>
+          <text x="289" y="116" textAnchor="middle" fill="#ECECE6" fontSize="7.5" fontFamily="monospace">
+            SPLIT INVOICE
+          </text>
+          <text x="289" y="131" textAnchor="middle" fill="#ECECE6" fontSize="7" fontFamily="monospace">
+            DISKON &amp; PATIENT
+          </text>
+          <text x="289" y="146" textAnchor="middle" fill="#FF4A1C" fontSize="7" fontFamily="monospace">
+            PRUDENTIAL SLA
+          </text>
+
+          <line x1="214" y1="119" x2="236" y2="119" stroke="#FFE100" strokeWidth="1.5" strokeDasharray="3 2" />
+        </svg>
+      );
+
+    case "member":
+      return (
+        <svg
+          viewBox="0 0 360 180"
+          className="h-44 w-full border border-paper/15 bg-ink p-3"
+          aria-hidden
+        >
+          {/* Left: Mom & Baby Enrollment */}
+          <rect
+            x="14"
+            y="24"
+            width="96"
+            height="132"
+            fill="#111113"
+            stroke="#FFE100"
+            strokeOpacity="0.7"
+          />
+          <text x="62" y="45" textAnchor="middle" fill="#FFE100" fontSize="8" fontWeight="bold" fontFamily="monospace">
+            ZA127 ENROLL
+          </text>
+          <text x="62" y="62" textAnchor="middle" fill="#ECECE6" fontSize="7.5" fontFamily="monospace">
+            NGEB BIRTH LINK
+          </text>
+          <text x="62" y="78" textAnchor="middle" fill="#86898F" fontSize="7" fontFamily="monospace">
+            ZT997T MOM HDR
+          </text>
+          <text x="62" y="92" textAnchor="middle" fill="#86898F" fontSize="7" fontFamily="monospace">
+            ZT997U BABY ITM
+          </text>
+          <rect x="24" y="108" width="76" height="34" fill="#0A0A0B" stroke="#FFE100" strokeOpacity="0.45" />
+          <text x="62" y="123" textAnchor="middle" fill="#FFE100" fontSize="7" fontFamily="monospace">
+            CL_HTTP_CLIENT
+          </text>
+          <text x="62" y="135" textAnchor="middle" fill="#ECECE6" fontSize="6.5" fontFamily="monospace">
+            REST EMAIL JSON
+          </text>
+
+          {/* Center: Coupon Snapshot Engine */}
+          <rect
+            x="132"
+            y="24"
+            width="96"
+            height="132"
+            fill="#111113"
+            stroke="#ECECE6"
+            strokeOpacity="0.4"
+          />
+          <text x="180" y="45" textAnchor="middle" fill="#ECECE6" fontSize="8" fontWeight="bold" fontFamily="monospace">
+            COUPON ENGINE
+          </text>
+          <text x="180" y="62" textAnchor="middle" fill="#FFE100" fontSize="7.5" fontFamily="monospace">
+            ZA126 · ZA128 · ZA129
+          </text>
+          <text x="180" y="80" textAnchor="middle" fill="#86898F" fontSize="7" fontFamily="monospace">
+            ZT997R/S MASTER
+          </text>
+          <text x="180" y="94" textAnchor="middle" fill="#86898F" fontSize="7" fontFamily="monospace">
+            ZT997V/X SNAPSHOT
+          </text>
+          <rect x="142" y="108" width="76" height="34" fill="#FFE100" />
+          <text x="180" y="123" textAnchor="middle" fill="#0A0A0B" fontSize="7.5" fontWeight="bold" fontFamily="monospace">
+            ZA130 / ZA131
+          </text>
+          <text x="180" y="135" textAnchor="middle" fill="#0A0A0B" fontSize="6.5" fontFamily="monospace">
+            KASIR vs SPV RBAC
+          </text>
+
+          {/* Right: FI F-04 Clearing & Audit */}
+          <rect
+            x="250"
+            y="24"
+            width="96"
+            height="132"
+            fill="#111113"
+            stroke="#FFE100"
+          />
+          <text x="298" y="45" textAnchor="middle" fill="#FFE100" fontSize="8" fontWeight="bold" fontFamily="monospace">
+            FI F-04 POSTING
+          </text>
+          <text x="298" y="64" textAnchor="middle" fill="#ECECE6" fontSize="7.5" fontFamily="monospace">
+            SAPMF05A BDC
+          </text>
+          <text x="298" y="80" textAnchor="middle" fill="#ECECE6" fontSize="7" fontFamily="monospace">
+            VBRK / BSID CLEAR
+          </text>
+          <text x="298" y="96" textAnchor="middle" fill="#86898F" fontSize="7" fontFamily="monospace">
+            PK 40 / 15 DISC
+          </text>
+          <rect x="260" y="108" width="76" height="34" fill="#0A0A0B" stroke="#ECECE6" strokeOpacity="0.35" />
+          <text x="298" y="123" textAnchor="middle" fill="#ECECE6" fontSize="7" fontFamily="monospace">
+            ZA132 – ZA134
+          </text>
+          <text x="298" y="135" textAnchor="middle" fill="#FFE100" fontSize="6.5" fontFamily="monospace">
+            ZT997W AUDIT LOG
+          </text>
+
+          <line x1="110" y1="90" x2="132" y2="90" stroke="#FFE100" strokeWidth="1.5" />
+          <line x1="228" y1="90" x2="250" y2="90" stroke="#FFE100" strokeWidth="1.5" />
+        </svg>
+      );
+
     case "bridge":
       return (
         <svg

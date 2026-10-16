@@ -28,18 +28,43 @@ export default function HeroCanvas({ onReady, reduced, className }: Props) {
     readyRef.current?.(scene);
 
     let visible = true;
+    let hasPointer = false;
+    let lastClientX = 0;
+    let lastClientY = 0;
+
+    const syncPointerToCanvas = () => {
+      if (!hasPointer) return;
+      const rect = canvas.getBoundingClientRect();
+      if (!rect.width || !rect.height) return;
+      // Compute NDC strictly relative to the canvas's current scrolled bounding box
+      const x = ((lastClientX - rect.left) / rect.width) * 2 - 1;
+      const y = -((lastClientY - rect.top) / rect.height) * 2 + 1;
+      scene.setPointer(x, y);
+    };
+
     const tick = () => {
-      if (visible && !document.hidden) scene.render();
+      if (visible && !document.hidden) {
+        syncPointerToCanvas();
+        scene.render();
+      }
     };
     gsap.ticker.add(tick);
 
-    const io = new IntersectionObserver(([e]) => (visible = e.isIntersecting), { threshold: 0 });
+    const io = new IntersectionObserver(
+      ([e]) => {
+        visible = e.isIntersecting;
+      },
+      { threshold: 0 }
+    );
     io.observe(canvas);
     const ro = new ResizeObserver(() => scene.resize());
     ro.observe(canvas.parentElement ?? canvas);
 
     const onMove = (e: PointerEvent) => {
-      scene.setPointer((e.clientX / window.innerWidth) * 2 - 1, -(e.clientY / window.innerHeight) * 2 + 1);
+      hasPointer = true;
+      lastClientX = e.clientX;
+      lastClientY = e.clientY;
+      syncPointerToCanvas();
     };
     window.addEventListener("pointermove", onMove, { passive: true });
 
