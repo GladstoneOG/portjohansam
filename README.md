@@ -39,9 +39,9 @@
 | Module | Code | Title | Core Technologies |
 | :--- | :--- | :--- | :--- |
 | **MOD-00** | `MCP-01` | **SAP-DEV MCP Server** | Model Context Protocol, Node.js, RFC Client, SE38 Bridge |
-| **MOD-01** | `APP-01` | **Web-to-SAP Appointment & Down-Payment Bridge** | `Z_*_APPOINTMENT` RFCs, `NR14` BDC, `BAPI_ACC_DOCUMENT_POST` |
-| **MOD-02** | `PRU-01` | **Prudential Guarantee & Split-Billing Suite** | `ZA119`–`ZA125`, OO-ALV Workbench, Split-Invoice Billing |
-| **MOD-03** | `LOY-01` | **Mom & Baby Loyalty & FI Coupon Ecosystem** | `ZA126`–`ZA134`, `NGEB` Birth Link, `CL_HTTP_CLIENT` REST, `F-04` |
+| **MOD-01** | `APP-01` | **Web-to-SAP Outpatient Scheduling & Payment Gateway** | RFC Interface Gateway, SAP IS-H, `BAPI_ACC_DOCUMENT_POST` |
+| **MOD-02** | `PAY-01` | **Enterprise Payer Guarantee & Split-Billing Suite** | Multi-Tier Workflow, OO-ALV Workbench, Split-Invoice Billing |
+| **MOD-03** | `LOY-01` | **Healthcare Membership & Financial Voucher Ecosystem** | Patient Lifecycle CRM, `CL_HTTP_CLIENT` REST, FI Discount Clearing |
 | **MOD-04** | `ISH-01` | **Clinical Case Flow & IS-H / EMR Integration** | SAP IS-H, `NPAT`, `NFAL`, BAPI/RFC Pipeline, Case Streaming |
 | **MOD-05** | `QMS-02` | **Real-Time Outpatient Smart Queue** | SAP IS-H, WebSocket/MQTT, Digital Signage, Telemetry Waveform |
 | **MOD-06** | `FLB-03` | **High-Availability Web ERP Fallback Engine** | PHP, Next.js, PostgreSQL, Auto-Failover Reconciler |

@@ -133,9 +133,9 @@ function ModuleSchematic({ variant }: { variant: Project["variant"] }) {
           />
           <rect x="126" y="26" width="108" height="22" fill="#FFE100" />
           <text x="180" y="40" textAnchor="middle" fill="#0A0A0B" fontSize="8" fontWeight="bold" fontFamily="monospace">
-            Z_*_APPOINTMENT
+            RFC GATEWAY
           </text>
-          {["Z_NEW_APPT", "Z_CHG_APPT", "Z_CAN_APPT"].map((fn, i) => (
+          {["APPT_CREATE", "APPT_UPDATE", "APPT_CANCEL"].map((fn, i) => (
             <g key={fn}>
               <rect
                 x="136"
@@ -213,9 +213,9 @@ function ModuleSchematic({ variant }: { variant: Project["variant"] }) {
         >
           {/* Top Master Pipeline */}
           {[
-            ["ZA119", "ZT997L DISKON"],
-            ["ZA120", "ZT997M MASTER CP"],
-            ["ZA121", "ZT997N ASSIGN"],
+            ["TARIFF CFG", "RATE REPERTOIRE"],
+            ["PAYER MASTER", "COVERAGE MATRIX"],
+            ["POLICY LINK", "CLINICAL MAPPING"],
           ].map(([tcode, tbl], i) => {
             const x = 18 + i * 112;
             return (
@@ -229,10 +229,10 @@ function ModuleSchematic({ variant }: { variant: Project["variant"] }) {
                   stroke="#ECECE6"
                   strokeOpacity="0.35"
                 />
-                <text x={x + 50} y="35" textAnchor="middle" fill="#FFE100" fontSize="8.5" fontWeight="bold" fontFamily="monospace">
+                <text x={x + 50} y="35" textAnchor="middle" fill="#FFE100" fontSize="8" fontWeight="bold" fontFamily="monospace">
                   {tcode}
                 </text>
-                <text x={x + 50} y="49" textAnchor="middle" fill="#ECECE6" fontSize="7" fontFamily="monospace">
+                <text x={x + 50} y="49" textAnchor="middle" fill="#ECECE6" fontSize="6.5" fontFamily="monospace">
                   {tbl}
                 </text>
                 {i < 2 ? (
@@ -254,16 +254,16 @@ function ModuleSchematic({ variant }: { variant: Project["variant"] }) {
           />
           <rect x="18" y="78" width="196" height="20" fill="#FFE100" />
           <text x="116" y="91" textAnchor="middle" fill="#0A0A0B" fontSize="8" fontWeight="bold" fontFamily="monospace">
-            ZA122 // OO-ALV TOP-UP WORKBENCH
+            OO-ALV GUARANTEE WORKBENCH
           </text>
           <text x="116" y="114" textAnchor="middle" fill="#ECECE6" fontSize="7.5" fontFamily="monospace">
-            ZT997O HEADER · ZT997P ITEMS
+            CLAIM HEADER · EXPENSE ITEMS
           </text>
           <text x="116" y="130" textAnchor="middle" fill="#FFE100" fontSize="7.5" fontFamily="monospace">
-            LMA / LML GUARANTEE TRACKING
+            GUARANTEE &amp; APPROVAL AUDIT
           </text>
           <text x="116" y="146" textAnchor="middle" fill="#86898F" fontSize="7" fontFamily="monospace">
-            ESTIMASI BIAYA vs PLAFON COVERAGE
+            ESTIMATED CHARGES vs CEILING
           </text>
 
           {/* Right Split Billing Output */}
@@ -276,17 +276,17 @@ function ModuleSchematic({ variant }: { variant: Project["variant"] }) {
             stroke="#ECECE6"
             strokeOpacity="0.45"
           />
-          <text x="289" y="98" textAnchor="middle" fill="#FFE100" fontSize="8.5" fontWeight="bold" fontFamily="monospace">
-            ZA123 – ZA125
+          <text x="289" y="98" textAnchor="middle" fill="#FFE100" fontSize="8" fontWeight="bold" fontFamily="monospace">
+            DISPATCH ENGINE
           </text>
           <text x="289" y="116" textAnchor="middle" fill="#ECECE6" fontSize="7.5" fontFamily="monospace">
             SPLIT INVOICE
           </text>
-          <text x="289" y="131" textAnchor="middle" fill="#ECECE6" fontSize="7" fontFamily="monospace">
-            DISKON &amp; PATIENT
+          <text x="289" y="131" textAnchor="middle" fill="#ECECE6" fontSize="7.5" fontFamily="monospace">
+            CO-PAY &amp; PATIENT
           </text>
           <text x="289" y="146" textAnchor="middle" fill="#FF4A1C" fontSize="7" fontFamily="monospace">
-            PRUDENTIAL SLA
+            INSTITUTIONAL SLA
           </text>
 
           <line x1="214" y1="119" x2="236" y2="119" stroke="#FFE100" strokeWidth="1.5" strokeDasharray="3 2" />
@@ -300,7 +300,7 @@ function ModuleSchematic({ variant }: { variant: Project["variant"] }) {
           className="h-44 w-full border border-paper/15 bg-ink p-3"
           aria-hidden
         >
-          {/* Left: Mom & Baby Enrollment */}
+          {/* Left: Enrollment & Rest Engine */}
           <rect
             x="14"
             y="24"
@@ -311,26 +311,26 @@ function ModuleSchematic({ variant }: { variant: Project["variant"] }) {
             strokeOpacity="0.7"
           />
           <text x="62" y="45" textAnchor="middle" fill="#FFE100" fontSize="8" fontWeight="bold" fontFamily="monospace">
-            ZA127 ENROLL
+            AUTO ENROLL
           </text>
           <text x="62" y="62" textAnchor="middle" fill="#ECECE6" fontSize="7.5" fontFamily="monospace">
-            NGEB BIRTH LINK
+            ADMISSION TRIGGER
           </text>
           <text x="62" y="78" textAnchor="middle" fill="#86898F" fontSize="7" fontFamily="monospace">
-            ZT997T MOM HDR
+            ACCOUNT MASTER
           </text>
           <text x="62" y="92" textAnchor="middle" fill="#86898F" fontSize="7" fontFamily="monospace">
-            ZT997U BABY ITM
+            BENEFICIARY ITEMS
           </text>
           <rect x="24" y="108" width="76" height="34" fill="#0A0A0B" stroke="#FFE100" strokeOpacity="0.45" />
           <text x="62" y="123" textAnchor="middle" fill="#FFE100" fontSize="7" fontFamily="monospace">
             CL_HTTP_CLIENT
           </text>
           <text x="62" y="135" textAnchor="middle" fill="#ECECE6" fontSize="6.5" fontFamily="monospace">
-            REST EMAIL JSON
+            REST API DISPATCH
           </text>
 
-          {/* Center: Coupon Snapshot Engine */}
+          {/* Center: Voucher Rules Engine */}
           <rect
             x="132"
             y="24"
@@ -341,23 +341,23 @@ function ModuleSchematic({ variant }: { variant: Project["variant"] }) {
             strokeOpacity="0.4"
           />
           <text x="180" y="45" textAnchor="middle" fill="#ECECE6" fontSize="8" fontWeight="bold" fontFamily="monospace">
-            COUPON ENGINE
+            VOUCHER ENGINE
           </text>
           <text x="180" y="62" textAnchor="middle" fill="#FFE100" fontSize="7.5" fontFamily="monospace">
-            ZA126 · ZA128 · ZA129
+            RULES ENGINE
           </text>
           <text x="180" y="80" textAnchor="middle" fill="#86898F" fontSize="7" fontFamily="monospace">
-            ZT997R/S MASTER
+            PROGRAM DEF
           </text>
           <text x="180" y="94" textAnchor="middle" fill="#86898F" fontSize="7" fontFamily="monospace">
-            ZT997V/X SNAPSHOT
+            LEDGER SNAPSHOT
           </text>
           <rect x="142" y="108" width="76" height="34" fill="#FFE100" />
           <text x="180" y="123" textAnchor="middle" fill="#0A0A0B" fontSize="7.5" fontWeight="bold" fontFamily="monospace">
-            ZA130 / ZA131
+            REDEMPTION DESK
           </text>
           <text x="180" y="135" textAnchor="middle" fill="#0A0A0B" fontSize="6.5" fontFamily="monospace">
-            KASIR vs SPV RBAC
+            CASHIER vs SPV RBAC
           </text>
 
           {/* Right: FI F-04 Clearing & Audit */}
@@ -375,7 +375,7 @@ function ModuleSchematic({ variant }: { variant: Project["variant"] }) {
           <text x="298" y="64" textAnchor="middle" fill="#ECECE6" fontSize="7.5" fontFamily="monospace">
             SAPMF05A BDC
           </text>
-          <text x="298" y="80" textAnchor="middle" fill="#ECECE6" fontSize="7" fontFamily="monospace">
+          <text x="298" y="80" textAnchor="middle" fill="#ECECE6" fontSize="7.5" fontFamily="monospace">
             VBRK / BSID CLEAR
           </text>
           <text x="298" y="96" textAnchor="middle" fill="#86898F" fontSize="7" fontFamily="monospace">
@@ -383,10 +383,10 @@ function ModuleSchematic({ variant }: { variant: Project["variant"] }) {
           </text>
           <rect x="260" y="108" width="76" height="34" fill="#0A0A0B" stroke="#ECECE6" strokeOpacity="0.35" />
           <text x="298" y="123" textAnchor="middle" fill="#ECECE6" fontSize="7" fontFamily="monospace">
-            ZA132 – ZA134
+            REPORTING SUITE
           </text>
           <text x="298" y="135" textAnchor="middle" fill="#FFE100" fontSize="6.5" fontFamily="monospace">
-            ZT997W AUDIT LOG
+            ACTIVITY AUDIT LOG
           </text>
 
           <line x1="110" y1="90" x2="132" y2="90" stroke="#FFE100" strokeWidth="1.5" />
